@@ -10,6 +10,7 @@ describe Rumoji do
     @zero = "0️⃣"
     @us = "🇺🇸"
     @non_potable_water = "🚱"
+    @osx_heart = "❤️"
   end
 
   describe "#encode" do
@@ -17,6 +18,10 @@ describe Rumoji do
       key = :smile
       Rumoji.encode(@smile).must_equal ":smile:"
       Rumoji.encode("#{@smile}").must_equal ":smile:"
+    end
+
+    it "drops stray variation selectors" do
+      Rumoji.encode(@osx_heart).must_equal ":heart:"
     end
   end
 

@@ -48,8 +48,10 @@ module Rumoji
       writeable.write sequence
     end
 
-    # Write any remaining codepoints.
-    writeable.write dump_codepoints_to_string(previous_codepoints) if previous_codepoints.any?
+    # Write any remaining codepoints and drop stray variation selectors.
+    if previous_codepoints.any? && previous_codepoints.pack("U*") != "\u{FE0F}"
+      writeable.write dump_codepoints_to_string(previous_codepoints)
+    end
 
     writeable
   end
